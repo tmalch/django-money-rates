@@ -17,7 +17,7 @@ back to the defaults.
 
 from django.conf import settings
 from django.utils import six
-try
+try:
     import importlib
 excpet ImportError:
     from django.utils importlib
