@@ -32,7 +32,7 @@ def get_rate_source():
             "Please run python manage.py update_rates" % backend.get_source_name())
 
 
-def base_convert_money(amount, currency_from, currency_to, places=None):
+def base_convert_money(amount, currency_from, currency_to, to_round=True):
     """
     Convert 'amount' from 'currency_from' to 'currency_to'
     """
@@ -53,8 +53,8 @@ def base_convert_money(amount, currency_from, currency_to, places=None):
 
     res = ((amount / rate_from) * rate_to)
     # After finishing the operation, quantize down if places given.
-    if places:
-        res = res.quantize(Decimal("0.1") ** places, rounding=None)
+    if to_round:
+        res = res.quantize(Decimal("1.00"))
     return res
 
 
