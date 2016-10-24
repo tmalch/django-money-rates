@@ -20,7 +20,7 @@ from django.utils import six
 try:
     import importlib
 except ImportError:
-    from django.utils importlib
+    from django.utils import importlib
 
 USER_SETTINGS = getattr(settings, 'DJANGO_MONEY_RATES', None)
 
