@@ -16,11 +16,13 @@ back to the defaults.
 """
 
 from django.conf import settings
-from django.utils import six
+
 try:
-    import importlib
+    from django.utils import importlib, six
 except ImportError:
-    from django.utils import importlib
+    import importlib
+    import six
+
 
 USER_SETTINGS = getattr(settings, 'DJANGO_MONEY_RATES', None)
 
