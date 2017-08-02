@@ -32,10 +32,9 @@ def get_rate_source():
             "Please run python manage.py update_rates" % backend.get_source_name())
 
 
-def base_convert_with_rate(amount, currency_from, currency_to, to_round=True):
+def base_convert_money(amount, currency_from, currency_to, to_round=True):
     """
     Convert 'amount' from 'currency_from' to 'currency_to'
-    Returns converted 'amount' and the exchange rate that was used
     """
     source = get_rate_source()
 
@@ -52,19 +51,11 @@ def base_convert_with_rate(amount, currency_from, currency_to, to_round=True):
     if isinstance(amount, float):
         amount = Decimal(amount).quantize(Decimal('.000001'))
 
-    rate = rate_to/rate_from
-    res = amount * rate
-    # After finishing the operation, quantize down if to_round True.
+    res = ((amount / rate_from) * rate_to)
+    # After finishing the operation, quantize down if places given.
     if to_round:
         res = res.quantize(Decimal("1.00"))
-    return res, rate
-
-
-def base_convert_money(amount, currency_from, currency_to, to_round=True):
-    """
-    Convert 'amount' from 'currency_from' to 'currency_to'
-    """
-    return base_convert_with_rate(amount, currency_from, currency_to, to_round)[0]
+    return res
 
 
 def convert_money(amount, currency_from, currency_to):
